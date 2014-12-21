@@ -2,6 +2,10 @@
 # Ez3D Phoenix - Modified FW
 ===========================================
 
+[unreleased][unreleased]
+- Auto bed leveling (tramming).
+[YouTube]: https://www.youtube.com/watch?v=EcGFLwj0pnA
+
 ## [0.0.8-beta] - 2014-12-19
 ### Added
 - Corrected Motor Current settings (more setting are available for 'other' Phoenix models)
