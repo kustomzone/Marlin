@@ -439,6 +439,29 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
   #endif
 
+  #ifdef AUTO_BED_LEVELING_GRID	// Check if Probe_Offset * Grid Points is greater than Probing Range
+    #if X_PROBE_OFFSET_FROM_EXTRUDER < 0
+      #if (-(X_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (RIGHT_PROBE_BED_POSITION - LEFT_PROBE_BED_POSITION))
+	     #error "The X axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
+	  #endif
+	#else
+      #if ((X_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (RIGHT_PROBE_BED_POSITION - LEFT_PROBE_BED_POSITION))
+	     #error "The X axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
+	  #endif
+	#endif
+    #if Y_PROBE_OFFSET_FROM_EXTRUDER < 0
+      #if (-(Y_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION))
+	     #error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
+	  #endif
+	#else
+      #if ((Y_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION))
+	     #error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
+	  #endif
+	#endif
+
+	
+  #endif
+  
 #endif // ENABLE_AUTO_BED_LEVELING
 
 
@@ -642,11 +665,13 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // Shift register panels
 // ---------------------
 // 2 wire Non-latching LCD SR from:
-// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection
-//#define SR_LCD
-#ifdef SR_LCD
-   #define SR_LCD_2W_NL    // Non latching 2 wire shift register
-   //#define NEWPANEL
+// https://bitbucket.org/fmalpartida/new-liquidcrystal/wiki/schematics#!shiftregister-connection 
+
+//#define SAV_3DLCD
+#ifdef SAV_3DLCD
+   #define SR_LCD_2W_NL    // Non latching 2 wire shiftregister
+   #define NEWPANEL
+   #define ULTIPANEL
 #endif
 
 

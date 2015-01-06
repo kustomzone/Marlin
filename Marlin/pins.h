@@ -904,9 +904,9 @@
   #define SCK_PIN          52
   #define MISO_PIN         50
   #define MOSI_PIN         51
-  #define MAX6675_SS       53
+  #define MAX6675_SS       66// Do not use pin 53 if there is even the remote possibility of using Dsplay/SD card
 #else
-  #define MAX6675_SS       49
+  #define MAX6675_SS       66// Do not use pin 49 as this is tied to the switch inside the SD card socket to detect if there is an SD card present
 #endif
 
 #endif // RAMPS_OLD || RAMPS_13_EFB || RAMPS_13_EEB || RAMPS_13_EFF || 3DRAG
@@ -1400,6 +1400,7 @@
 #define PS_ON_PIN          12
 #define KILL_PIN           -1
 #define SUICIDE_PIN        54  //PIN that has to be turned on right after start, to keep power flowing.
+#define SERVO0_PIN         13  // untested
 
 #ifdef ULTRA_LCD
 
@@ -1904,6 +1905,8 @@
   #define X_STOP_PIN         13
   #define Y_STOP_PIN         14
   #define Z_STOP_PIN         15
+//  #define Z_STOP_PIN         36  // For inductive sensor.
+
   #define TEMP_0_PIN          7  // Extruder / Analog pin numbering
   #define TEMP_BED_PIN        6  // Bed / Analog pin numbering
 
@@ -1914,7 +1917,6 @@
 #define SDSS               20  // PB0 - 8 in marlin env.
 #define LED_PIN            -1
 #define PS_ON_PIN          -1
-#define KILL_PIN           -1
 #define ALARM_PIN          -1
 #define SDCARDDETECT       -1
 
@@ -1933,13 +1935,24 @@
 #define LCD_PINS_D5        -1
 #define LCD_PINS_D6        -1
 #define LCD_PINS_D7        -1
-#define BTN_EN1            -1
-#define BTN_EN2            -1
-#define BTN_ENC            -1
 
+#ifdef SAV_3DLCD
 // For LCD SHIFT register LCD
-#define SR_DATA_PIN         0
-#define SR_CLK_PIN          1
+#define SR_DATA_PIN         1
+#define SR_CLK_PIN          0
+
+#define BTN_EN1            41
+#define BTN_EN2            40
+#define BTN_ENC            12
+
+#define KILL_PIN           42 // A2 = 42 - teensy = 40
+#define HOME_PIN          -1 // A4 = marlin 44 - teensy = 42
+
+#ifdef NUM_SERVOS
+  #define SERVO0_PIN       41 // In teensy's pin definition for pinMode (in Servo.cpp)
+#endif
+
+#endif
 
 #endif // SAV_MKI
 
@@ -2347,7 +2360,7 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 
 #define X_STEP_PIN 37
 #define X_DIR_PIN 48
-#define X_MIN_PIN -1 //12
+#define X_MIN_PIN 12
 #define X_MAX_PIN 24
 #define X_ENABLE_PIN 29
 #define X_MS1_PIN 40
@@ -2355,7 +2368,7 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 
 #define Y_STEP_PIN 36
 #define Y_DIR_PIN 49
-#define Y_MIN_PIN -1 //11
+#define Y_MIN_PIN 11
 #define Y_MAX_PIN 23
 #define Y_ENABLE_PIN 28
 #define Y_MS1_PIN 69
@@ -2364,13 +2377,13 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 #define Z_STEP_PIN 35
 #define Z_DIR_PIN 47
 #define Z_MIN_PIN 10
-#define Z_MAX_PIN -1 //30
+#define Z_MAX_PIN 30
 #define Z_ENABLE_PIN 27
 #define Z_MS1_PIN 68
 #define Z_MS2_PIN 67
 
 #define HEATER_BED_PIN 3
-#define TEMP_BED_PIN 7
+#define TEMP_BED_PIN 2
 
 #define HEATER_0_PIN  9
 #define TEMP_0_PIN 0
@@ -2398,15 +2411,14 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 #define E1_MS2_PIN 64
 
 #define DIGIPOTSS_PIN 38
-#define DIGIPOT_CHANNELS {4, 5, 3, 0, 1} // X Y Z E0 E1 digipot channels to stepper driver mapping
+#define DIGIPOT_CHANNELS {4,5,3,0,1} // X Y Z E0 E1 digipot channels to stepper driver mapping
 
 #define SDPOWER            -1
 #define SDSS               53
 #define LED_PIN            13
-#define FAN_PIN            -1
-#define EXTRUDER_FAN_PIN   -1
-#define PS_ON_PIN           4
-#define KILL_PIN           -1  //80 with Smart Controller LCD
+#define FAN_PIN            8
+#define PS_ON_PIN          4
+#define KILL_PIN           -1 //80 with Smart Controller LCD
 #define SUICIDE_PIN        -1  //PIN that has to be turned on right after start, to keep power flowing.
 
 #ifdef ULTRA_LCD
