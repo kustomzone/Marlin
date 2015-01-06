@@ -1,20 +1,3 @@
-Marlin has moved
-================
-
-The new location is https://github.com/MarlinFirmware/Marlin
-
-This location will not be updated
-
-Marlin is moving
-===================
-We are moving marlin, this is to allow changes like adding collabs faster
-
-Plus a new thing is that marlin can now have more than one owner, initial @Erikzalm and @boelle. Erik will always be there, other can come and go.
-
-we still have to add collabs
-
-https://github.com/MarlinFirmware
-
 Current Status: Bug Fixing
 
 ##NEED TESTERS -- Phoenix (no Z-Probe)
