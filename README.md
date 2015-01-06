@@ -1,11 +1,6 @@
-V1 branch no longer here
+Current Status: Bug Fixing
 ===================
 
-<<<<<<< HEAD
-Downloading Marlin for general use? Please select the releases tab or go directly to https://github.com/ErikZalm/Marlin/releases and download the latest.
-
-Interested in the latest bleeding edge features and bugs? https://github.com/ErikZalm/Marlin/tree/Development. Click on the "download Zip" in the lower right corner or direct link: https://github.com/ErikZalm/Marlin/archive/Development.zip
-=======
 What bugs are we working on: https://github.com/ErikZalm/Marlin/milestones
 
 IRC channel on freenode: #marlin-firmware
@@ -427,6 +422,4 @@ For examples of these sensors, see: http://www.thingiverse.com/thing:454584, htt
 4 new Mcodes are defined to set relevant parameters: M404, M405, M406, M407 - see above.
 
  Implements a delay buffer to handle the transit delay between where the filament is measured and when it gets to the extruder.
->>>>>>> 2dfdf4b55c5806f89f5f96572570d8b80111b6d4
 
-Interested in developing for Marlin? Fork https://github.com/ErikZalm/Marlin/tree/Development, and submit pull requests against the Development Branch.

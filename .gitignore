@@ -4,10 +4,6 @@ applet/
 *.orig
 *.rej
 *.bak
-<<<<<<< HEAD
 /Release/
-.DS_Store
-=======
 *.DS_Store
 *.idea
->>>>>>> 2dfdf4b55c5806f89f5f96572570d8b80111b6d4
