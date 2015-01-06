@@ -2,6 +2,25 @@
 # Ez3D Phoenix - Modified FW
 ===========================================
 
+## [0.0.9-beta] - 2015-01-06
+### Merge
+- Updated to the latest Marlin Firmware
+-- Marlin now lives here:
+[Marlin]: https://github.com/MarlinFirmware/Marlin
+
+### Changed
+- Some settings have been set to Marlin defaults (they are not needed for the Phoenix to function)
+
+### Notes:
+- Enough changes to Marlin have been made to function with Phoenix.
+- I will be working on the Z-Probe Branch indefinitely and will only be updating this branch
+- when enough changes to Marlin warrant an update.
+- Need testers with no Z-Probe (of any kind), with Inductive Z-Probes and micro-switch.
+- The goal is to create a robust set of configurations for those Phoenix configurations
+- to submit to Marlin so they end up in the examples folder (this will benefit us all).
+- If you are in the Phoenix group, you know how to contact me.
+- Otherwise, make use of the issue tracker on GitHub (and join the G+ Phoenix Group)
+
 ## [0.0.8-beta] - 2014-12-19
 ### Added
 - Corrected Motor Current settings (more setting are available for 'other' Phoenix models)
