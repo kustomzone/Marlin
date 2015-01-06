@@ -1,10 +1,11 @@
-Current Status: Bug Fixing
-
 ##NEED TESTERS -- Phoenix (no Z-Probe)
 ##Running on Marlin Development Branch
 ##Please read Changelog.md - Notes.
+========================================
 
-===================
+
+Current Status: Bug Fixing
+==========================
 
 What bugs are we working on: https://github.com/MarlinFirmware/Marlin/milestones/Bug%20Fixing%20Round%201
 
