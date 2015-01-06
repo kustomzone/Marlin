@@ -1,4 +1,7 @@
 Current Status: Bug Fixing
+##DO NOT DOWNLOAD FOR PHOENIX
+##Rebasing to latest Marlin
+##Come back later
 ===================
 
 What bugs are we working on: https://github.com/ErikZalm/Marlin/milestones
