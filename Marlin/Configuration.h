@@ -25,7 +25,7 @@
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
 #define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time
-#define STRING_CONFIG_H_AUTHOR "(Luis E Alvarado, Ez3D Phoenix Mod FW, inductive-dev)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Luis E Alvarado, Ez3D Phoenix FW, Z-Probe Dev)" // Who made the changes.
 
 // SERIAL_PORT selects which serial port should be used for communication with the host.
 // This allows the connection of wireless adapters (for instance) to non-default port pins.
@@ -132,7 +132,7 @@
 #define HEATER_0_MAXTEMP 275
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
-#define BED_MAXTEMP 130
+#define BED_MAXTEMP 150
 
 // If your bed has low resistance e.g. .6 ohm and throws the fuse you can duty cycle it to reduce the
 // average current. The value should be an integer and the heat bed will be turned on for 1 interval of
@@ -159,9 +159,9 @@
 
 // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 // Ultimaker
-//  #define  DEFAULT_Kp 22.2
-//  #define  DEFAULT_Ki 1.08
-//  #define  DEFAULT_Kd 114
+//    #define  DEFAULT_Kp 22.2
+//    #define  DEFAULT_Ki 1.08
+//    #define  DEFAULT_Kd 114
 
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
@@ -174,9 +174,9 @@
 //    #define  DEFAULT_Kd 440
 
 // Phoenix Ez3D
-    #define DEFAULT_Kp 11.37
-    #define DEFAULT_Ki 0.93
-    #define DEFAULT_Kd 67.43
+    #define DEFAULT_Kp 10.92
+    #define DEFAULT_Ki 0.47
+    #define DEFAULT_Kd 62.82
 #endif // PIDTEMP
 
 // Bed Temperature Control
@@ -376,13 +376,13 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
     // set the rectangle in which to probe  -  Probing Order: (x, y)
     #define LEFT_PROBE_BED_POSITION  15    // (left, front)
-    #define RIGHT_PROBE_BED_POSITION 170   // (right, front)
-    #define BACK_PROBE_BED_POSITION  110   // (right, back)
-    #define FRONT_PROBE_BED_POSITION 10    // (left, back)
+    #define RIGHT_PROBE_BED_POSITION 155   // (right, front)
+    #define BACK_PROBE_BED_POSITION  160   // (right, back)
+    #define FRONT_PROBE_BED_POSITION 30    // (left, back)
 
      // set the number of grid points per dimension
      // I wouldn't see a reason to go above 3 (=9 probing points on the bed)
-    #define AUTO_BED_LEVELING_GRID_POINTS 5
+    #define AUTO_BED_LEVELING_GRID_POINTS 2
 
 
   #else  // not AUTO_BED_LEVELING_GRID
@@ -484,9 +484,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {78.7402,78.7402,200.0*8/3,760*1.1}  // default steps per unit for Ultimaker
 #define DEFAULT_AXIS_STEPS_PER_UNIT   {44.4444, 44.4444, 88.88888, 95} // Phoenix
+//#define DEFAULT_MAX_FEEDRATE          {500, 500, 5, 25}    // (mm/sec)
 #define DEFAULT_MAX_FEEDRATE          {200, 100, 150, 25}    // (mm/sec)
+//#define DEFAULT_MAX_ACCELERATION      {9000,9000,100,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 #define DEFAULT_MAX_ACCELERATION      {2500,500,1000,10000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
+//#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_ACCELERATION          1000    // X, Y, Z and E max acceleration in mm/s^2 for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000   // X, Y, Z and E max acceleration in mm/s^2 for retracts
 
