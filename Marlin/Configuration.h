@@ -339,10 +339,10 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing
-#define X_MAX_POS 240
-#define X_MIN_POS 35
+#define X_MAX_POS 300
+#define X_MIN_POS 0
 #define Y_MAX_POS 185
-#define Y_MIN_POS 5
+#define Y_MIN_POS 0
 #define Z_MAX_POS 190
 #define Z_MIN_POS 0
 
@@ -376,9 +376,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   #ifdef AUTO_BED_LEVELING_GRID
 
     // set the rectangle in which to probe  -  Probing Order: (x, y)
-    #define LEFT_PROBE_BED_POSITION  15    // (left, front)
-    #define RIGHT_PROBE_BED_POSITION 170   // (right, front)
-    #define BACK_PROBE_BED_POSITION  115   // (right, back)
+    #define LEFT_PROBE_BED_POSITION  40    // (left, front)
+    #define RIGHT_PROBE_BED_POSITION 220   // (right, front)
+    #define BACK_PROBE_BED_POSITION  120   // (right, back)
     #define FRONT_PROBE_BED_POSITION 5    // (left, back)
 
      // set the number of grid points per dimension
