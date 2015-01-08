@@ -1,8 +1,8 @@
-##NEED TESTERS -- Phoenix (Z-Probe)
+###NEED TESTERS -- Phoenix (Z-Probe)
 
-##Running on Marlin Development Branch
+###Running on Marlin Development Branch
 
-##Please read Changelog.md - Notes.
+###Please read Changelog.md - Notes.
 
 
 # Marlin 3D Printer Firmware
