@@ -175,9 +175,9 @@
 //    #define  DEFAULT_Kd 440
 
 // Phoenix Ez3D
-    #define DEFAULT_Kp 10.92
-    #define DEFAULT_Ki 0.47
-    #define DEFAULT_Kd 62.82
+    #define DEFAULT_Kp 14.29
+    #define DEFAULT_Ki 0.78
+    #define DEFAULT_Kd 65.86
 #endif // PIDTEMP
 
 // Bed Temperature Control
