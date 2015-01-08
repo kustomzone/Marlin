@@ -1,13 +1,10 @@
-##NEED TESTERS -- Phoenix (no Z-Probe)
+###NEED TESTERS -- Phoenix (no Z-Probe)
 
-##Running on Marlin Development Branch
+###Running on Marlin Development Branch
 
-##Please read Changelog.md - Notes.
+###Please read Changelog.md - Notes.
 
 
-===========================
-Current Status: Bug Fixing
-==========================
 # Marlin 3D Printer Firmware
 
 <img align="right" src="Documentation/Logo/Marlin%20Logo%20GitHub.png" />
