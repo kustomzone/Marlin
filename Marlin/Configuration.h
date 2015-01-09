@@ -89,7 +89,7 @@
 // 10 is 100k RS thermistor 198-961 (4.7k pullup)
 // 11 is 100k beta 3950 1% thermistor (4.7k pullup)
 // 12 is 100k 0603 SMD Vishay NTCS0603E3104FXT (4.7k pullup) (calibrated for Makibox hot bed)
-// 13 is 100k Hisens 3950  1% up to 300¡C for hotend "Simple ONE " & "Hotend "All In ONE" 
+// 13 is 100k Hisens 3950 1% up to 300¡C for hotend "Simple ONE" & "Hotend "All In ONE"
 // 20 is the PT100 circuit found in the Ultimainboard V2.x
 // 60 is 100k Maker's Tool Works Kapton Bed Thermistor beta=3950
 //
@@ -383,7 +383,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
      // set the number of grid points per dimension
      // I wouldn't see a reason to go above 3 (=9 probing points on the bed)
-    #define AUTO_BED_LEVELING_GRID_POINTS 2
+    #define AUTO_BED_LEVELING_GRID_POINTS 3
 
 
   #else  // not AUTO_BED_LEVELING_GRID
@@ -440,28 +440,29 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
   #endif
 
-//  #ifdef AUTO_BED_LEVELING_GRID	// Check if Probe_Offset * Grid Points is greater than Probing Range
+#ifdef AUTO_BED_LEVELING_GRID // Check if Probe_Offset (X or Y) is greater than Max_Length (X or Y)
 
-//    #if X_PROBE_OFFSET_FROM_EXTRUDER < 0
-//      #if (-(X_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (RIGHT_PROBE_BED_POSITION - LEFT_PROBE_BED_POSITION))
-//	     #error "The X axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
-//	  #endif
-//	#else
-//      #if ((X_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (RIGHT_PROBE_BED_POSITION - LEFT_PROBE_BED_POSITION))
-//	     #error "The X axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
-//	  #endif
-//	#endif
-//    #if Y_PROBE_OFFSET_FROM_EXTRUDER < 0
-//      #if (-(Y_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION))
-//	     #error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
-//	  #endif
-//	#else
-//      #if ((Y_PROBE_OFFSET_FROM_EXTRUDER * AUTO_BED_LEVELING_GRID_POINTS) >= (BACK_PROBE_BED_POSITION - FRONT_PROBE_BED_POSITION))
-//	     #error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
-//	  #endif
-//	#endif
-	
-//  #endif
+	#if X_PROBE_OFFSET_FROM_EXTRUDER < 0
+		#if ((-X_PROBE_OFFSET_FROM_EXTRUDER) + RIGHT_PROBE_BED_POSITION) >= X_MAX_LENGTH
+		#error "The X axis probing range is too large, reduce RIGHT_PROBE_BED_POSITION"
+	  #endif
+	#else
+		#if (X_PROBE_OFFSET_FROM_EXTRUDER + RIGHT_PROBE_BED_POSITION) >= X_MAX_LENGTH
+		#error "The X axis probing range is too large, reduce RIGHT_PROBE_BED_POSITION"
+	  #endif
+	#endif
+
+	#if Y_PROBE_OFFSET_FROM_EXTRUDER < 0
+		#if ((-Y_PROBE_OFFSET_FROM_EXTRUDER) + BACK_PROBE_BED_POSITION) >= Y_MAX_LENGTH
+		#error "The Y axis probing range is too large, reduce BACK_PROBE_BED_POSITION"
+	  #endif
+	#else
+		#if (Y_PROBE_OFFSET_FROM_EXTRUDER + BACK_PROBE_BED_POSITION) >= Y_MAX_LENGTH
+		#error "The Y axis probing range is too large, reduce BACK_PROBE_BED_POSITION"
+	  #endif
+	#endif
+
+#endif
   
 #endif // ENABLE_AUTO_BED_LEVELING
 
