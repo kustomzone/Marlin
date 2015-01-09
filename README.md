@@ -1,7 +1,5 @@
 ###NEED TESTERS -- Phoenix (no Z-Probe)
-
 ###Running on Marlin Development Branch
-
 ###Please read Changelog.md - Notes.
 
 
