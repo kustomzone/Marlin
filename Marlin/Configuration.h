@@ -383,7 +383,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
      // set the number of grid points per dimension
      // I wouldn't see a reason to go above 3 (=9 probing points on the bed)
-    #define AUTO_BED_LEVELING_GRID_POINTS 3
+    #define AUTO_BED_LEVELING_GRID_POINTS 2
 
 
   #else  // not AUTO_BED_LEVELING_GRID
@@ -459,6 +459,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 	     #error "The Y axis probing range is not enough to fit all the points defined in AUTO_BED_LEVELING_GRID_POINTS"
 	  #endif
 	#endif
+  #endif
   
 #endif // ENABLE_AUTO_BED_LEVELING
 
