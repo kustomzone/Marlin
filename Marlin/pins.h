@@ -100,6 +100,8 @@
   #include "pins_OMCA.h"
 #elif MB(RAMBO)
   #include "pins_RAMBO.h"
+#elif MB(RAMBO_PHOENIX)
+  #include "pins_RAMBO_Phoenix.h"
 #elif MB(ELEFU_3)
   #include "pins_ELEFU_3.h"
 #elif MB(5DPRINT)
