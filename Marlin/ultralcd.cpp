@@ -811,13 +811,13 @@ static void lcd_control_temperature_menu()
 #if TEMP_SENSOR_0 != 0
   MENU_ITEM_EDIT(int3, MSG_NOZZLE, &target_temperature[0], 0, HEATER_0_MAXTEMP - 15);
 #endif
-#if TEMP_SENSOR_1 != 0
+#if TEMP_SENSOR_1 != 0 && EXTRUDERS > 1
   MENU_ITEM_EDIT(int3, MSG_NOZZLE " 2", &target_temperature[1], 0, HEATER_1_MAXTEMP - 15);
 #endif
-#if TEMP_SENSOR_2 != 0
+#if TEMP_SENSOR_2 != 0 && EXTRUDERS > 2
   MENU_ITEM_EDIT(int3, MSG_NOZZLE " 3", &target_temperature[2], 0, HEATER_2_MAXTEMP - 15);
 #endif
-#if TEMP_SENSOR_3 != 0
+#if TEMP_SENSOR_3 != 0 && EXTRUDERS > 3
   MENU_ITEM_EDIT(int3, MSG_NOZZLE " 4", &target_temperature[3], 0, HEATER_3_MAXTEMP - 15);
 #endif
 #if TEMP_SENSOR_BED != 0
@@ -1323,7 +1323,7 @@ void lcd_update()
         u8g.firstPage();
         do
         {
-            u8g.setFont(u8g_font_6x10_marlin);
+            u8g.setFont(FONT_MENU);
             u8g.setPrintPos(125,0);
             if (blink % 2) u8g.setColorIndex(1); else u8g.setColorIndex(0); // Set color for the alive dot
             u8g.drawPixel(127,63); // draw alive dot
