@@ -589,6 +589,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 //#define SDSUPPORT // Enable SD Card Support in Hardware Console
 //#define SDSLOW // Use slower SD transfer mode (not normally needed - uncomment if you're getting volume init error)
 //#define SD_CHECK_AND_RETRY // Use CRC checks and retries on the SD communication
+#define ENCODER_INVERT // Inverts the scrolling direction
 #define ENCODER_PULSES_PER_STEP 1 // Increase if you have a high resolution encoder
 #define ENCODER_STEPS_PER_MENU_ITEM 4 // Set according to ENCODER_PULSES_PER_STEP or your liking
 //#define ULTIMAKERCONTROLLER //as available from the Ultimaker online store.
