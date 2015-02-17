@@ -41,7 +41,7 @@ Here are some standard links for getting your machine calibrated:
 #define STRING_VERSION "1.0.2"
 #define STRING_URL "reprap.org"
 #define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time
-#define STRING_CONFIG_H_AUTHOR "(Luis E Alvarado, RAMBo 1.2d GLCD MakerFarm i3v12 w. Z-Probe)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(Luis E Alvarado, MakerFarm 12\" i3v Prusa w. ABL on RAMBo1.2d)" // Who made the changes.
 #define STRING_SPLASH_LINE1 "v" STRING_VERSION // will be shown during bootup in line 1
 //#define STRING_SPLASH_LINE2 STRING_VERSION_CONFIG_H // will be shown during bootup in line2
 
@@ -130,7 +130,7 @@ Here are some standard links for getting your machine calibrated:
 #define MAX_REDUNDANT_TEMP_SENSOR_DIFF 10
 
 // Actual temperature must be close to target for this long before M109 returns success
-#define TEMP_RESIDENCY_TIME 5  // (seconds)
+#define TEMP_RESIDENCY_TIME 10  // (seconds)
 #define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
 #define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
 
@@ -146,7 +146,7 @@ Here are some standard links for getting your machine calibrated:
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 275
+#define HEATER_0_MAXTEMP 295 // Hexagon Hot-End (allowing room for 280C)
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -193,10 +193,10 @@ Here are some standard links for getting your machine calibrated:
 //  #define  DEFAULT_Ki 3.71
 //  #define  DEFAULT_Kd 115.11
 
-// Maker Farm - Hexagon Hot End - S250 C8 PID Autotune
-    #define  DEFAULT_Kp 26.26
-    #define  DEFAULT_Ki 1.46
-    #define  DEFAULT_Kd 118.11
+// Maker Farm - Hexagon Hot End - S250 C10 PID Autotune
+    #define  DEFAULT_Kp 43.39
+    #define  DEFAULT_Ki 3.34
+    #define  DEFAULT_Kd 140.76
 
 // MakerGear
 //    #define  DEFAULT_Kp 7.0
@@ -314,11 +314,11 @@ your extruder heater takes 2 minutes to hit the target on heating.
 
 #ifndef ENDSTOPPULLUPS
   // fine endstop settings: Individual pullups. will be ignored if ENDSTOPPULLUPS is defined
-  #define ENDSTOPPULLUP_XMAX
-  #define ENDSTOPPULLUP_YMAX
-  #define ENDSTOPPULLUP_ZMAX
-  #define ENDSTOPPULLUP_XMIN
-  #define ENDSTOPPULLUP_YMIN
+  // #define ENDSTOPPULLUP_XMAX
+  // #define ENDSTOPPULLUP_YMAX
+  // #define ENDSTOPPULLUP_ZMAX
+  // #define ENDSTOPPULLUP_XMIN
+  // #define ENDSTOPPULLUP_YMIN
   // #define ENDSTOPPULLUP_ZMIN
 #endif
 
@@ -372,11 +372,11 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define max_software_endstops true  // If true, axis won't move to coordinates greater than the defined lengths below.
 
 // Travel limits after homing (units are in mm)
-#define X_MAX_POS 300
+#define X_MAX_POS 290
 #define X_MIN_POS 0
-#define Y_MAX_POS 300
+#define Y_MAX_POS 290
 #define Y_MIN_POS 0
-#define Z_MAX_POS 300
+#define Z_MAX_POS 285
 #define Z_MIN_POS 0
 
 #define X_MAX_LENGTH (X_MAX_POS - X_MIN_POS)
@@ -521,7 +521,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,4000,841}   // default steps per unit for Ultimaker
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80,80,4000,876}   // customized for MakerFarm i3v 12"
 #define DEFAULT_MAX_FEEDRATE          {250, 250, 2, 22}  // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {1000,1000,5,1000} // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
@@ -565,12 +565,12 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define EEPROM_CHITCHAT
 
 // Preheat Constants
-#define PLA_PREHEAT_HOTEND_TEMP 205
+#define PLA_PREHEAT_HOTEND_TEMP 195
 #define PLA_PREHEAT_HPB_TEMP 70
 #define PLA_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
 
 #define ABS_PREHEAT_HOTEND_TEMP 225
-#define ABS_PREHEAT_HPB_TEMP 100
+#define ABS_PREHEAT_HPB_TEMP 110
 #define ABS_PREHEAT_FAN_SPEED 255   // Insert Value between 0 and 255
 
 //==============================LCD and SD support=============================
