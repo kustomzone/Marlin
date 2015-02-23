@@ -81,7 +81,7 @@
 #define SDPOWER            -1
 #define SDSS               53
 #define LED_PIN            13
-#define FAN_PIN            2  
+#define FAN_PIN            6 //2  MOSFET is turning on the fan when off on FAN 2 pin so using FAN 1 instead
 
 /**********************************************************
   Fan Pins
