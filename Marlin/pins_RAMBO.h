@@ -15,9 +15,9 @@
     #define SERVO1_PIN     23 //Motor header MX2
     #if NUM_SERVOS > 2
       #define SERVO2_PIN   24 //Motor header MX3
-      #if NUM_SERVOS > 3
-        #define SERVO2_PIN  5 //pwm header pin 5
-      #endif
+//      #if NUM_SERVOS > 3
+//        #define SERVO2_PIN  5 //pwm header pin 5
+//      #endif
     #endif
   #endif
 #endif
@@ -171,4 +171,10 @@
 #ifdef FILAMENT_SENSOR
   //Filip added pin for Filament sensor analog input 
   #define FILWIDTH_PIN        3
+#endif
+
+#ifdef TEMP_STAT_LEDS
+  //PWM-Ext Pins
+  #define STAT_LED_BLUE 4
+  #define STAT_LED_RED 5
 #endif
