@@ -730,103 +730,113 @@ void get_command()
     serial_char = MYSERIAL.read();
     if(serial_char == '\n' ||
        serial_char == '\r' ||
-       (serial_char == ':' && comment_mode == false) ||
        serial_count >= (MAX_CMD_SIZE - 1) )
     {
-      if(!serial_count) { //if empty line
-        comment_mode = false; //for new command
+      // end of line == end of comment
+      comment_mode = false;
+
+      if(!serial_count) {
+        // short cut for empty lines
         return;
       }
       cmdbuffer[bufindw][serial_count] = 0; //terminate string
-      if(!comment_mode){
-        comment_mode = false; //for new command
-        fromsd[bufindw] = false;
-        if(strchr(cmdbuffer[bufindw], 'N') != NULL)
+
+      fromsd[bufindw] = false;
+      if(strchr(cmdbuffer[bufindw], 'N') != NULL)
+      {
+        strchr_pointer = strchr(cmdbuffer[bufindw], 'N');
+        gcode_N = (strtol(strchr_pointer + 1, NULL, 10));
+        if(gcode_N != gcode_LastN+1 && (strstr_P(cmdbuffer[bufindw], PSTR("M110")) == NULL) ) {
+          SERIAL_ERROR_START;
+          SERIAL_ERRORPGM(MSG_ERR_LINE_NO);
+          SERIAL_ERRORLN(gcode_LastN);
+          //Serial.println(gcode_N);
+          FlushSerialRequestResend();
+          serial_count = 0;
+          return;
+        }
+
+        if(strchr(cmdbuffer[bufindw], '*') != NULL)
         {
-          strchr_pointer = strchr(cmdbuffer[bufindw], 'N');
-          gcode_N = (strtol(strchr_pointer + 1, NULL, 10));
-          if(gcode_N != gcode_LastN+1 && (strstr_P(cmdbuffer[bufindw], PSTR("M110")) == NULL) ) {
-            SERIAL_ERROR_START;
-            SERIAL_ERRORPGM(MSG_ERR_LINE_NO);
-            SERIAL_ERRORLN(gcode_LastN);
-            //Serial.println(gcode_N);
-            FlushSerialRequestResend();
-            serial_count = 0;
-            return;
-          }
+          byte checksum = 0;
+          byte count = 0;
+          while(cmdbuffer[bufindw][count] != '*') checksum = checksum^cmdbuffer[bufindw][count++];
+          strchr_pointer = strchr(cmdbuffer[bufindw], '*');
 
-          if(strchr(cmdbuffer[bufindw], '*') != NULL)
-          {
-            byte checksum = 0;
-            byte count = 0;
-            while(cmdbuffer[bufindw][count] != '*') checksum = checksum^cmdbuffer[bufindw][count++];
-            strchr_pointer = strchr(cmdbuffer[bufindw], '*');
-
-            if( (int)(strtod(strchr_pointer + 1, NULL)) != checksum) {
-              SERIAL_ERROR_START;
-              SERIAL_ERRORPGM(MSG_ERR_CHECKSUM_MISMATCH);
-              SERIAL_ERRORLN(gcode_LastN);
-              FlushSerialRequestResend();
-              serial_count = 0;
-              return;
-            }
-            //if no errors, continue parsing
-          }
-          else
-          {
+          if( (int)(strtod(strchr_pointer + 1, NULL)) != checksum) {
             SERIAL_ERROR_START;
-            SERIAL_ERRORPGM(MSG_ERR_NO_CHECKSUM);
+            SERIAL_ERRORPGM(MSG_ERR_CHECKSUM_MISMATCH);
             SERIAL_ERRORLN(gcode_LastN);
             FlushSerialRequestResend();
             serial_count = 0;
             return;
           }
-
-          gcode_LastN = gcode_N;
           //if no errors, continue parsing
         }
-        else  // if we don't receive 'N' but still see '*'
+        else
         {
-          if((strchr(cmdbuffer[bufindw], '*') != NULL))
-          {
-            SERIAL_ERROR_START;
-            SERIAL_ERRORPGM(MSG_ERR_NO_LINENUMBER_WITH_CHECKSUM);
-            SERIAL_ERRORLN(gcode_LastN);
-            serial_count = 0;
-            return;
-          }
-        }
-        if((strchr(cmdbuffer[bufindw], 'G') != NULL)){
-          strchr_pointer = strchr(cmdbuffer[bufindw], 'G');
-          switch((int)((strtod(strchr_pointer + 1, NULL)))){
-          case 0:
-          case 1:
-          case 2:
-          case 3:
-            if (Stopped == true) {
-              SERIAL_ERRORLNPGM(MSG_ERR_STOPPED);
-              LCD_MESSAGEPGM(MSG_STOPPED);
-            }
-            break;
-          default:
-            break;
-          }
-
+          SERIAL_ERROR_START;
+          SERIAL_ERRORPGM(MSG_ERR_NO_CHECKSUM);
+          SERIAL_ERRORLN(gcode_LastN);
+          FlushSerialRequestResend();
+          serial_count = 0;
+          return;
         }
 
-        //If command was e-stop process now
-        if(strcmp(cmdbuffer[bufindw], "M112") == 0)
-          kill();
-        
-        bufindw = (bufindw + 1)%BUFSIZE;
-        buflen += 1;
+        gcode_LastN = gcode_N;
+        //if no errors, continue parsing
       }
+      else  // if we don't receive 'N' but still see '*'
+      {
+        if((strchr(cmdbuffer[bufindw], '*') != NULL))
+        {
+          SERIAL_ERROR_START;
+          SERIAL_ERRORPGM(MSG_ERR_NO_LINENUMBER_WITH_CHECKSUM);
+          SERIAL_ERRORLN(gcode_LastN);
+          serial_count = 0;
+          return;
+        }
+      }
+      if((strchr(cmdbuffer[bufindw], 'G') != NULL)){
+        strchr_pointer = strchr(cmdbuffer[bufindw], 'G');
+        switch((int)((strtod(strchr_pointer + 1, NULL)))){
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+          if (Stopped == true) {
+            SERIAL_ERRORLNPGM(MSG_ERR_STOPPED);
+            LCD_MESSAGEPGM(MSG_STOPPED);
+          }
+          break;
+        default:
+          break;
+        }
+
+      }
+
+      //If command was e-stop process now
+      if(strcmp(cmdbuffer[bufindw], "M112") == 0)
+        kill();
+
+      bufindw = (bufindw + 1)%BUFSIZE;
+      buflen += 1;
+
       serial_count = 0; //clear buffer
     }
-    else
-    {
-      if(serial_char == ';') comment_mode = true;
-      if(!comment_mode) cmdbuffer[bufindw][serial_count++] = serial_char;
+    else if(serial_char == '\\') {  //Handle escapes
+       
+        if(MYSERIAL.available() > 0  && buflen < BUFSIZE) {
+            // if we have one more character, copy it over
+            serial_char = MYSERIAL.read();
+            cmdbuffer[bufindw][serial_count++] = serial_char;
+        }
+
+        //otherwise do nothing        
+    }
+    else { // its not a newline, carriage return or escape char
+        if(serial_char == ';') comment_mode = true;
+        if(!comment_mode) cmdbuffer[bufindw][serial_count++] = serial_char;
     }
   }
   #ifdef SDSUPPORT
@@ -1772,8 +1782,6 @@ inline void gcode_G28() {
 
   inline void gcode_G29() {
 
-    float x_tmp, y_tmp, z_tmp, real_z;
-
     // Prevent user from running a G29 without first homing in X and Y
     if (!axis_known_position[X_AXIS] || !axis_known_position[Y_AXIS]) {
       LCD_MESSAGEPGM(MSG_POSITION_UNKNOWN);
@@ -1782,27 +1790,25 @@ inline void gcode_G28() {
       return;
     }
 
+    int verbose_level = 1;
+    float x_tmp, y_tmp, z_tmp, real_z;
+
+    if (code_seen('V') || code_seen('v')) {
+      verbose_level = code_value_long();
+      if (verbose_level < 0 || verbose_level > 4) {
+        SERIAL_PROTOCOLPGM("?(V)erbose Level is implausible (0-4).\n");
+        return;
+      }
+    }
+
     bool enhanced_g29 = code_seen('E') || code_seen('e');
 
     #ifdef AUTO_BED_LEVELING_GRID
 
-      // Example Syntax:  G29 N4 V2 E T
-      int verbose_level = 1;
+      bool topo_flag = verbose_level > 2 || code_seen('T') || code_seen('t');
 
-      bool topo_flag = code_seen('T') || code_seen('t');
-
-      if (code_seen('V') || code_seen('v')) {
-        verbose_level = code_value();
-        if (verbose_level < 0 || verbose_level > 4) {
-          SERIAL_PROTOCOLPGM("?(V)erbose Level is implausible (0-4).\n");
-          return;
-        }
-        if (verbose_level > 0) {
-          SERIAL_PROTOCOLPGM("G29 Enhanced Auto Bed Leveling Code V1.25:\n");
-          SERIAL_PROTOCOLPGM("Full support at: http://3dprintboard.com/forum.php\n");
-          if (verbose_level > 2) topo_flag = true;
-        }
-      }
+      if (verbose_level > 0)
+        SERIAL_PROTOCOLPGM("G29 Auto Bed Leveling\n");
 
       int auto_bed_leveling_grid_points = code_seen('P') ? code_value_long() : AUTO_BED_LEVELING_GRID_POINTS;
       if (auto_bed_leveling_grid_points < 2 || auto_bed_leveling_grid_points > AUTO_BED_LEVELING_GRID_POINTS) {
@@ -2418,10 +2424,8 @@ inline void gcode_M42() {
       }
     }
 
-    if (verbose_level > 0)   {
-      SERIAL_PROTOCOLPGM("M48 Z-Probe Repeatability test.   Version 2.00\n");
-      SERIAL_PROTOCOLPGM("Full support at: http://3dprintboard.com/forum.php\n");
-    }
+    if (verbose_level > 0)
+      SERIAL_PROTOCOLPGM("M48 Z-Probe Repeatability test\n");
 
     if (code_seen('n')) {
       n_samples = code_value();
@@ -2435,7 +2439,7 @@ inline void gcode_M42() {
     Y_current = Y_probe_location = st_get_position_mm(Y_AXIS);
     Z_current = st_get_position_mm(Z_AXIS);
     Z_start_location = st_get_position_mm(Z_AXIS) + Z_RAISE_BEFORE_PROBING;
-    ext_position   = st_get_position_mm(E_AXIS);
+    ext_position = st_get_position_mm(E_AXIS);
 
     if (code_seen('E') || code_seen('e'))
       engage_probe_for_each_reading++;
