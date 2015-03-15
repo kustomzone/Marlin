@@ -43,7 +43,7 @@ Here are some standard links for getting your machine calibrated:
 #define STRING_VERSION_CONFIG_H __DATE__ " " __TIME__ // build date and time
 #define STRING_CONFIG_H_AUTHOR "(Luis E Alvarado, MakerFarm 12\" i3v Prusa w. ABL on RAMBo1.2d)" // Who made the changes.
 #define STRING_SPLASH_LINE1 "v" STRING_VERSION // will be shown during bootup in line 1
-//#define STRING_SPLASH_LINE2 STRING_VERSION_CONFIG_H // will be shown during bootup in line2
+#define STRING_SPLASH_LINE2 STRING_VERSION_CONFIG_H // will be shown during bootup in line 2
 
 // SERIAL_PORT selects which serial port should be used for communication with the host.
 // This allows the connection of wireless adapters (for instance) to non-default port pins.
