@@ -70,7 +70,7 @@ Here are some standard links for getting your machine calibrated:
 // #define MACHINE_UUID "00000000-0000-0000-0000-000000000000"
 
 // This defines the number of extruders
-#define EXTRUDERS 1
+#define EXTRUDERS 2
 
 //// The following define selects which power supply you have. Please choose the one that matches your setup
 // 1 = ATX
@@ -124,7 +124,7 @@ Here are some standard links for getting your machine calibrated:
 //     #define DUMMY_THERMISTOR_999_VALUE 100
 
 #define TEMP_SENSOR_0 1
-#define TEMP_SENSOR_1 0
+#define TEMP_SENSOR_1 1
 #define TEMP_SENSOR_2 0
 #define TEMP_SENSOR_3 0
 #define TEMP_SENSOR_BED 1
@@ -150,8 +150,8 @@ Here are some standard links for getting your machine calibrated:
 // When temperature exceeds max temp, your heater will be switched off.
 // This feature exists to protect your hotend from overheating accidentally, but *NOT* from thermistor short/failure!
 // You should use MINTEMP for thermistor short/failure protection.
-#define HEATER_0_MAXTEMP 295 // Hexagon Hot-End (allowing room for 280C)
-#define HEATER_1_MAXTEMP 275
+#define HEATER_0_MAXTEMP 285 // Hexagon Hot-End (allowing room for 280C)
+#define HEATER_1_MAXTEMP 285
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
 #define BED_MAXTEMP 125
@@ -438,9 +438,9 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
     #define TOPO_ORIGIN OriginFrontLeft
 
     // The edges of the rectangle in which to probe
-    #define LEFT_PROBE_BED_POSITION  20
+    #define LEFT_PROBE_BED_POSITION  25
     #define RIGHT_PROBE_BED_POSITION 260
-    #define FRONT_PROBE_BED_POSITION 15
+    #define FRONT_PROBE_BED_POSITION 20
     #define BACK_PROBE_BED_POSITION  260
     
     #define MIN_PROBE_EDGE 10 // The probe square sides can be no smaller than this
@@ -466,18 +466,18 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
   // Offsets to the probe relative to the extruder tip (Hotend - Probe)
   // X and Y offsets must be integers
-  #define X_PROBE_OFFSET_FROM_EXTRUDER  18     // Probe on: -left  +right
-  #define Y_PROBE_OFFSET_FROM_EXTRUDER -18     // Probe on: -front +behind
-  #define Z_PROBE_OFFSET_FROM_EXTRUDER -2.72   // -below (always!)
+  #define X_PROBE_OFFSET_FROM_EXTRUDER  21     // Probe on: -left  +right
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER -5     // Probe on: -front +behind
+  #define Z_PROBE_OFFSET_FROM_EXTRUDER -2.29   // -below (always!)
 
-  #define Z_RAISE_BEFORE_HOMING 5       // (in mm) Raise Z before homing (G28) for Probe Clearance.
+  #define Z_RAISE_BEFORE_HOMING 4       // (in mm) Raise Z before homing (G28) for Probe Clearance.
                                         // Be sure you have this distance over your Z_MAX_POS in case
 
-  #define XY_TRAVEL_SPEED 4000         // X and Y axis travel speed between probes, in mm/min
+  #define XY_TRAVEL_SPEED 6000         // X and Y axis travel speed between probes, in mm/min
 
   #define Z_RAISE_BEFORE_PROBING   5   //How much the extruder will be raised before traveling to the first probing point.
-  #define Z_RAISE_BETWEEN_PROBINGS 5   //How much the extruder will be raised when traveling from between next probing points
-  #define Z_RAISE_AFTER_PROBING    5   //How much the extruder will be raised after the last probing point.
+  #define Z_RAISE_BETWEEN_PROBINGS 2   //How much the extruder will be raised when traveling from between next probing points
+  #define Z_RAISE_AFTER_PROBING    3   //How much the extruder will be raised after the last probing point.
 
 //   #define Z_PROBE_END_SCRIPT "G1 Z10 F12000\nG1 X15 Y330\nG1 Z0.5\nG1 Z10" //These commands will be executed in the end of G29 routine.
                                                                             //Useful to retract a deployable probe.
@@ -489,7 +489,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
   //The value is the delay to turn the servo off after powered on - depends on the servo speed; 300ms is good value, but you can try lower it.
   // You MUST HAVE the SERVO_ENDSTOPS defined to use here a value higher than zero otherwise your code will not compile.
 
-  #define PROBE_SERVO_DEACTIVATION_DELAY 350
+  #define PROBE_SERVO_DEACTIVATION_DELAY 500
 
 
 //If you have enabled the Bed Auto Leveling and are using the same Z Probe for Z Homing,
@@ -531,7 +531,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 
 // default settings
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 4000, 995}   // customized for MakerFarm i3v 12"
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {80, 80, 4000, 644.2} // customized for clough42's Itty Bitty extruders
 #define DEFAULT_MAX_FEEDRATE          {250, 250, 2, 22}     // (mm/sec)
 #define DEFAULT_MAX_ACCELERATION      {1000,1000,5,1000}    // X, Y, Z, E maximum start speed for accelerated moves. E default values are good for Skeinforge 40+, for older versions raise them a lot.
 
@@ -576,11 +576,11 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 #define EEPROM_CHITCHAT
 
 // Preheat Constants
-#define PLA_PREHEAT_HOTEND_TEMP 180
+#define PLA_PREHEAT_HOTEND_TEMP 195
 #define PLA_PREHEAT_HPB_TEMP 70
 #define PLA_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
-#define ABS_PREHEAT_HOTEND_TEMP 240
+#define ABS_PREHEAT_HOTEND_TEMP 225
 #define ABS_PREHEAT_HPB_TEMP 110
 #define ABS_PREHEAT_FAN_SPEED 0   // Insert Value between 0 and 255
 
@@ -841,7 +841,7 @@ const bool Z_MAX_ENDSTOP_INVERTING = false; // set to true to invert the logic o
 // leaving it undefined or defining as 0 will disable the servo subsystem
 // If unsure, leave commented / disabled
 //
-#define NUM_SERVOS 3 // Servo index starts with 0 for M280 command
+#define NUM_SERVOS 1 // Servo index starts with 0 for M280 command
 
 // Servo Endstops
 //
