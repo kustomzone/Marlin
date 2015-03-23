@@ -1309,16 +1309,18 @@ static void engage_z_probe() {
 static void retract_z_probe() {
   // Retract Z Servo endstop if enabled
   #ifdef SERVO_ENDSTOPS
-   if (servo_endstops[Z_AXIS] > -1)
+    if (servo_endstops[Z_AXIS] > -1)
     {
+      #if Z_RAISE_AFTER_PROBING > 0
         do_blocking_move_to(current_position[X_AXIS], current_position[Y_AXIS], Z_RAISE_AFTER_PROBING);
         st_synchronize();
-        
-       #if SERVO_LEVELING
-         servos[servo_endstops[Z_AXIS]].attach(0);
-       #endif
-         servos[servo_endstops[Z_AXIS]].write(servo_endstop_angles[Z_AXIS * 2 + 1]);
-       #if SERVO_LEVELING
+      #endif
+    
+      #if SERVO_LEVELING
+        servos[servo_endstops[Z_AXIS]].attach(0);
+      #endif
+      servos[servo_endstops[Z_AXIS]].write(servo_endstop_angles[Z_AXIS * 2 + 1]);
+      #if SERVO_LEVELING
         delay(PROBE_SERVO_DEACTIVATION_DELAY);
         servos[servo_endstops[Z_AXIS]].detach();
       #endif
@@ -1326,7 +1328,7 @@ static void retract_z_probe() {
   #elif defined(Z_PROBE_ALLEN_KEY)
     // Move up for safety
     feedrate = homing_feedrate[X_AXIS];
-    destination[Z_AXIS] = current_position[Z_AXIS] + 20;
+    destination[Z_AXIS] = current_position[Z_AXIS] + Z_RAISE_AFTER_PROBING;
     prepare_move_raw();
 
     // Move to the start position to initiate retraction
@@ -1370,9 +1372,9 @@ static void retract_z_probe() {
 
 enum ProbeAction
 {
-    ProbeStay              = 0,
-    ProbeEngage            = (1 << 0),
-    ProbeRetract           = (1 << 1),
+    ProbeStay             = 0,
+    ProbeEngage           = (1 << 0),
+    ProbeRetract          = (1 << 1),
     ProbeEngageAndRetract = (ProbeEngage | ProbeRetract),
 };
 
@@ -2231,7 +2233,7 @@ inline void gcode_G28() {
 
     #ifdef Z_PROBE_SLED
       dock_sled(false); // engage (un-dock) the probe
-    #elif not defined(SERVO_ENDSTOPS)
+    #elif defined(Z_PROBE_ALLEN_KEY)
       engage_z_probe();
     #endif
 
@@ -2474,7 +2476,7 @@ inline void gcode_G28() {
 
   #ifdef Z_PROBE_SLED
     dock_sled(true, -SLED_DOCKING_OFFSET); // dock the probe, correcting for over-travel
-  #elif not defined(SERVO_ENDSTOPS)
+  #elif defined(Z_PROBE_ALLEN_KEY)
     retract_z_probe();
   #endif
     
