@@ -78,7 +78,7 @@
 // Multiple extruders can be assigned to the same pin in which case
 // the fan will turn on when any selected extruder is above the threshold.
 #define EXTRUDER_0_AUTO_FAN_PIN  8
-#define EXTRUDER_1_AUTO_FAN_PIN -1
+#define EXTRUDER_1_AUTO_FAN_PIN  8
 #define EXTRUDER_2_AUTO_FAN_PIN -1
 #define EXTRUDER_3_AUTO_FAN_PIN -1
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
@@ -98,7 +98,8 @@
 // Only a few motherboards support this, like RAMPS, which have dual extruder support (the 2nd, often unused, extruder driver is used
 // to control the 2nd Z axis stepper motor). The pins are currently only defined for a RAMPS motherboards.
 // On a RAMPS (or other 5 driver) motherboard, using this feature will limit you to using 1 extruder.
-#define Z_DUAL_STEPPER_DRIVERS
+
+//#define Z_DUAL_STEPPER_DRIVERS
 
 #ifdef Z_DUAL_STEPPER_DRIVERS
 
@@ -111,7 +112,7 @@
 // Play a little bit with small adjustments (0.5mm) and check the behaviour.
 // The M119 (endstops report) will start reporting the Z2 Endstop as well.
 
-#define Z_DUAL_ENDSTOPS
+//#define Z_DUAL_ENDSTOPS
 
 #ifdef Z_DUAL_ENDSTOPS
   #define Z2_STEP_PIN E2_STEP_PIN           // Stepper to be used to Z2 axis.
