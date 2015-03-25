@@ -2264,10 +2264,24 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 ******************************************************************/
 
 #ifndef __AVR_ATmega2560__
-#error Oops!  Make sure you have 'Arduino Mega 2560' selected from the 'Tools -> Boards' menu.
+  #error Oops!  Make sure you have 'Arduino Mega 2560' selected from the 'Tools -> Boards' menu.
 #endif
 
 #define LARGE_FLASH true
+
+// Servo support
+#ifdef NUM_SERVOS
+  #define SERVO0_PIN       22 //motor header MX1
+  #if NUM_SERVOS > 1
+    #define SERVO1_PIN     23 //Motor header MX2
+    #if NUM_SERVOS > 2
+      #define SERVO2_PIN   24 //Motor header MX3
+//      #if NUM_SERVOS > 3
+//        #define SERVO2_PIN  5 //pwm header pin 5
+//      #endif
+    #endif
+  #endif
+#endif
 
 #define X_STEP_PIN 37
 #define X_DIR_PIN 48
@@ -2327,8 +2341,15 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
 #define SDPOWER            -1
 #define SDSS               53
 #define LED_PIN            13
-#define FAN_PIN            8
-#define PS_ON_PIN          4
+#define FAN_PIN            6 //2  MOSFET is turning on the fan when off on FAN 2 pin so using FAN 1 instead
+
+/**********************************************************
+  Fan Pins
+  Fan_0 8
+  Fan_1 6
+  Fan_2 2
+***********************************************************/
+#define PS_ON_PIN           4
 #define KILL_PIN           -1 //80 with Smart Controller LCD
 #define SUICIDE_PIN        -1  //PIN that has to be turned on right after start, to keep power flowing.
 
@@ -2336,7 +2357,11 @@ DaveX plan for Teensylu/printrboard-type pinouts (ref teensylu & sprinter) for a
   #define KILL_PIN 80
   #ifdef NEWPANEL
    //arduino pin which triggers an piezzo beeper
-    #define BEEPER 79      // Beeper on AUX-4
+    #ifdef LCD_FEEDBACK_DISABLE
+      #define BEEPER -1    // disable buzzer
+    #else
+      #define BEEPER 79    // Beeper on AUX-4
+    #endif
     #define LCD_PINS_RS 70
     #define LCD_PINS_ENABLE 71
     #define LCD_PINS_D4 72
