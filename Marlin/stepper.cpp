@@ -155,7 +155,7 @@ volatile signed char count_direction[NUM_AXIS] = { 1, 1, 1, 1 };
       Z2_STEP_WRITE(v); \
     }
   #else
-    #define Z_APPLY_STEP(v,Q) Z_STEP_WRITE(v), Z2_STEP_WRITE(v)
+    #define Z_APPLY_STEP(v,Q) { Z_STEP_WRITE(v); Z2_STEP_WRITE(v); }
   #endif
 #else
   #define Z_APPLY_DIR(v,Q) Z_DIR_WRITE(v)
@@ -1176,8 +1176,6 @@ void digipot_current(uint8_t driver, int current) {
 }
 
 void microstep_init() {
-  const uint8_t microstep_modes[] = MICROSTEP_MODES;
-
   #if defined(E1_MS1_PIN) && E1_MS1_PIN >= 0
     pinMode(E1_MS1_PIN,OUTPUT);
     pinMode(E1_MS2_PIN,OUTPUT); 
@@ -1192,7 +1190,9 @@ void microstep_init() {
     pinMode(Z_MS2_PIN,OUTPUT);
     pinMode(E0_MS1_PIN,OUTPUT);
     pinMode(E0_MS2_PIN,OUTPUT);
-    for (int i = 0; i <= 4; i++) microstep_mode(i, microstep_modes[i]);
+    const uint8_t microstep_modes[] = MICROSTEP_MODES;
+    for (int i = 0; i < sizeof(microstep_modes) / sizeof(microstep_modes[0]); i++)
+        microstep_mode(i, microstep_modes[i]);
   #endif
 }
 

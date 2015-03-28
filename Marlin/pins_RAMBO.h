@@ -97,11 +97,7 @@
   #define KILL_PIN 80
   #ifdef NEWPANEL
    //arduino pin which triggers an piezzo beeper
-    #ifdef LCD_FEEDBACK_DISABLE
-      #define BEEPER -1    // disable buzzer
-    #else
-      #define BEEPER 79    // Beeper on AUX-4
-    #endif
+    #define BEEPER 79    // Beeper on AUX-4
     #define LCD_PINS_RS 70
     #define LCD_PINS_ENABLE 71
     #define LCD_PINS_D4 72
