@@ -53,7 +53,7 @@ extern float current_temperature_bed;
   extern float redundant_temperature;
 #endif
 
-#if defined(CONTROLLERFAN_PIN) && CONTROLLERFAN_PIN > -1
+#if HAS_CONTROLLERFAN
   extern unsigned char soft_pwm_bed;
 #endif
 
@@ -72,10 +72,10 @@ extern float current_temperature_bed;
   float unscalePID_d(float d);
 
 #endif
+
 #ifdef PIDTEMPBED
   extern float bedKp,bedKi,bedKd;
 #endif
-  
   
 #ifdef BABYSTEPPING
   extern volatile int babystepsTodo[3];
